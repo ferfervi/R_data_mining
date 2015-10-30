@@ -161,10 +161,10 @@ print(head(freq, 20))
 Script to connect to Tweeter STRAMING API, retrieve tweets and perform an analysis of the location from where the tweets where made.
 
 ##### map plot (Catalonia) of the example provided, location of the tweets in the program ".CAT" of TV3 (Catalan TV 2015-10-29).  
-![alt text](https://github.com/ferfervi/R_data_mining/blob/master/map_plot_with_streaming_api_forcadelltv3.jpeg  "mapplot_catalonia")
+![alt text](https://github.com/ferfervi/R_data_mining/blob/master/map_plot_with_streaming_api_forcadelltv3.jpg  "mapplot_catalonia")
 
 ##### map plot (Europe) of the example provided, location of the tweets in the program ".CAT" of TV3 (Catalan TV 2015-10-29).  
-![alt text](map_plot_streaming_api_forcadelltv3_europe.jpeg  "mapplot_europe")
+![alt text](map_plot_streaming_api_forcadelltv3_europe.jpg  "mapplot_europe")
 
 ```
 setwd("~/Development/Rtwitter")
