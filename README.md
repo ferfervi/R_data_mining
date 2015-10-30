@@ -158,7 +158,9 @@ print(head(freq, 20))
 
 ### section 2: STREAMING API
 
-Script to connect to Tweeter STRAMING API, retrieve tweets and perform an analysis of the location from where the tweets where made.
+Script to connect to Tweeter STRAMING API, retrieve tweets and perform an analysis:
+- location from where the tweets where made.
+- wordcloud, words more used in tweets after performing some cleaning
 
 ##### map plot (Catalonia) of the example provided, location of the tweets in the program ".CAT" of TV3 (Catalan TV 2015-10-29).  
 ![alt text](https://github.com/ferfervi/R_data_mining/blob/master/map_plot_with_streaming_api_forcadelltv3.jpg  "mapplot_catalonia")
