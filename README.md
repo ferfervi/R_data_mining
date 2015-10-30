@@ -6,11 +6,11 @@ In this repository I will commit some functions that I had stored locally and ca
 
 Script to connect to Tweeter Search API, retrieve twets and perform some text cleaning / analysis displaying a wordcloud with the words more used in the tweets.
 
-#### Wordcloud of the example provided, words most used in the tweets in the program ".CAT" of TV3 (Catalan TV 2015-10-29).  
+##### Wordcloud of the example provided, words most used in the tweets in the program ".CAT" of TV3 (Catalan TV 2015-10-29).  
 ![alt text](https://github.com/ferfervi/R_data_mining/blob/master/textAnalysisForcadell.jpeg  "WORDCLOUD")
 
 ```
-#### Script that connects to Twitter SEARCH API.
+##### Script that connects to Twitter SEARCH API.
 
 # Furthermore in this example is performed an analysis of the words
 # most used in the tweets analyzed.
