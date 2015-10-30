@@ -78,6 +78,28 @@ captureTweetsRealTime = function(case)
 }
 
 
+
+#Function to clean special characters
+cleanText = function(x)
+{
+  x <- iconv(x,to="latin1")
+  #remove URLs
+  x <- gsub('http.*\\s*','',x)
+  #remove punctiation and catalan punctuation
+  x <- gsub("'|,",' ',x)
+  x <- gsub("ó|ó",'o',x)
+  x <- gsub("í",'i',x)
+  x <- gsub("è|é",'e',x)
+  x <- gsub("à|á",'a',x)
+  x <- gsub("ú",'u',x)
+  
+  # remove Twitter specifics: at (user referenced) , hashtags and retweets
+  x = gsub("@\\w+", "", x)
+  x = gsub("#\\w+", "", x)
+  x = gsub("RT", "", x)
+  return(x)
+}
+
 ######## INIT - SET CONNECTION #####
 
 #set new connection to Twitter (only required the first time). Next times you can access 
@@ -115,3 +137,44 @@ df_locations <- data.frame(lat=locations$lat,lon=locations$lon)
 myMap <- get_map("Catalonia", zoom=8)
 p <- ggmap(myMap)
 p + geom_point(data=d, aes(x=lon, y=lat), color="red", size=6, alpha=0.3)
+
+
+#D.2) text analysis
+mytext <- tweetsToAnalyze$text
+mytextCleaned <- cleanText(mytext)
+
+#clean and transform creating a Corpus
+myWordsToDelete <- c("")
+allWordsToDelete <- c(stopwords("catalan"),stopwords("spanish"),stopwords("english"),myWordsToDelete)
+
+corpusT <- Corpus(VectorSource(mytextCleaned))
+
+corpusT <- tm_map(corpusT, PlainTextDocument)
+corpusT <- tm_map(corpusT, content_transformer(tolower))
+corpusT <- tm_map(corpusT, removePunctuation)
+corpusT <- tm_map(corpusT, removeNumbers)
+corpusT <- tm_map(corpusT, removeWords, allWordsToDelete)
+corpusT <- tm_map(corpusT, stripWhitespace)
+
+#Term Document Matrix (# word per tweet): Rows->words, columns->Tweets or textFile
+tdm = TermDocumentMatrix(corpusT, control=list(wordLengths=c(1,Inf)))
+#tdm = TermDocumentMatrix(t_c,control = list(stopwords = myStopwords,stripWhitespace = TRUE,removeNumbers = TRUE,removePunctuation = TRUE, content_transformer(tolower)))
+
+#obtain word (counts) ordered in decreasing order
+m = as.matrix(tdm)
+word_freqs = sort(rowSums(m), decreasing=TRUE) 
+
+# create a data frame with words and their frequencies
+dm = data.frame(word=names(word_freqs), freq=word_freqs)
+
+# Display wordcloud
+#wordcloud(dm$word,dm$freq,max.words=70,random.order=FALSE, colors=brewer.pal(6, "Dark2"),rot.per=0.5)
+set.seed(2505)
+#quartz()
+wordcloud(dm$word,dm$freq,max.words=70,random.order=FALSE, scale=c(3,.4), colors=brewer.pal(6,"Dark2"))
+
+# List of word frequencies
+freq <- sort(rowSums(as.matrix(tdm)), decreasing=TRUE)
+print("***List words with more frequency:")
+print(head(freq, 20))
+
